@@ -1,0 +1,51 @@
+{
+  "id": "openclaw-scribe",
+  "name": "OpenClaw Scribe",
+  "description": "Turn-by-turn conversation logger. Appends every agent exchange to daily markdown files across all surfaces (Discord, TUI, webchat, cron), regardless of model.",
+  "activation": {
+    "onStartup": true
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["logDir"],
+    "properties": {
+      "logDir": {
+        "type": "string",
+        "description": "Directory to write daily log files. Supports ~/ prefix. Required."
+      },
+      "filename": {
+        "type": "string",
+        "description": "Filename template. Variables: {date} (YYYY-MM-DD), {channel} (provider name or 'tui'), {agent} (agentId). Default: '{date}-{channel}.md'"
+      },
+      "channels": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "string"
+        },
+        "description": "Per-channel filename overrides. Key is provider name (e.g. 'discord', 'telegram') or 'tui'. Value is a filename template."
+      },
+      "userAlias": {
+        "type": "string",
+        "description": "Label for the user speaker. Default: 'user'"
+      },
+      "assistantAlias": {
+        "type": "string",
+        "description": "Fallback label for the assistant speaker. Default: agent name from IDENTITY.md, then 'assistant'"
+      },
+      "maxLength": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "Maximum characters to write for the assistant response before truncating. 0 = unlimited. Default: 4000"
+      },
+      "includeCron": {
+        "type": "boolean",
+        "description": "Include cron/heartbeat turns in logs. Default: false"
+      },
+      "metadata": {
+        "type": "boolean",
+        "description": "Append a metadata line (model name + token counts) after the timestamp. Default: false"
+      }
+    }
+  }
+}
