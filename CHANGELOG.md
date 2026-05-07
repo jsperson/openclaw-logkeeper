@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to `openclaw-scribe` will be documented in this file.
+All notable changes to `openclaw-logkeeper` will be documented in this file.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -20,4 +20,4 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Optional metadata line with model name and token counts (`metadata: true`).
 - Cron/heartbeat turn exclusion by default (`includeCron: false`).
 - Atomic file creation using `flag: 'ax'` to prevent duplicate headers.
-- Published to npm as `openclaw-scribe` and submitted to ClawHub.
+- Published to npm as `openclaw-logkeeper` and submitted to ClawHub.

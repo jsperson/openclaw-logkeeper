@@ -1,4 +1,4 @@
-# openclaw-scribe
+# openclaw-logkeeper
 
 Turn-by-turn conversation logger for [OpenClaw](https://openclaw.ai). Appends every completed agent exchange to daily markdown files — across Discord, TUI, webchat, cron, and any other surface — regardless of which model is running.
 
@@ -11,21 +11,21 @@ Output is plain markdown, compatible with [QMD](https://github.com/openclaw/qmd)
 **From ClawHub (recommended):**
 
 ```bash
-openclaw plugins install clawhub:openclaw-scribe
+openclaw plugins install clawhub:openclaw-logkeeper
 ```
 
 **From npm:**
 
 ```bash
-npm install -g openclaw-scribe
-openclaw plugins install ./node_modules/openclaw-scribe
+npm install -g openclaw-logkeeper
+openclaw plugins install ./node_modules/openclaw-logkeeper
 ```
 
 **From source:**
 
 ```bash
-git clone https://github.com/jsperson/openclaw-scribe.git
-cd openclaw-scribe
+git clone https://github.com/jsperson/openclaw-logkeeper.git
+cd openclaw-logkeeper
 npm install && npm run build
 openclaw plugins install ./
 ```
@@ -40,7 +40,7 @@ Scribe requires two things in your `~/.openclaw/openclaw.json`:
 {
   "plugins": {
     "entries": {
-      "openclaw-scribe": {
+      "openclaw-logkeeper": {
         "enabled": true,
         "hooks": {
           "allowConversationAccess": true
@@ -62,7 +62,7 @@ Without `allowConversationAccess: true`, the hook is silently blocked by OpenCla
 
 ## Configuration reference
 
-All options go under `plugins.entries.openclaw-scribe.config` in `openclaw.json`.
+All options go under `plugins.entries.openclaw-logkeeper.config` in `openclaw.json`.
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
@@ -81,7 +81,7 @@ All options go under `plugins.entries.openclaw-scribe.config` in `openclaw.json`
 {
   "plugins": {
     "entries": {
-      "openclaw-scribe": {
+      "openclaw-logkeeper": {
         "enabled": true,
         "hooks": {
           "allowConversationAccess": true
@@ -164,7 +164,7 @@ The assistant's display name is read from your workspace `IDENTITY.md` automatic
 
 ## Contributing
 
-Bug reports and PRs welcome at [github.com/jsperson/openclaw-scribe](https://github.com/jsperson/openclaw-scribe/issues).
+Bug reports and PRs welcome at [github.com/jsperson/openclaw-logkeeper](https://github.com/jsperson/openclaw-logkeeper/issues).
 
 ## License
 

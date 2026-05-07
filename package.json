@@ -1,5 +1,5 @@
 {
-  "name": "openclaw-scribe",
+  "name": "openclaw-logkeeper",
   "version": "1.0.0",
   "description": "Turn-by-turn conversation logger for OpenClaw. Appends every agent exchange to daily markdown files across all surfaces — Discord, TUI, webchat, cron — regardless of model.",
   "type": "module",
@@ -8,12 +8,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jsperson/openclaw-scribe.git"
+    "url": "https://github.com/jsperson/openclaw-logkeeper.git"
   },
   "bugs": {
-    "url": "https://github.com/jsperson/openclaw-scribe/issues"
+    "url": "https://github.com/jsperson/openclaw-logkeeper/issues"
   },
-  "homepage": "https://github.com/jsperson/openclaw-scribe#readme",
+  "homepage": "https://github.com/jsperson/openclaw-logkeeper#readme",
   "engines": {
     "node": ">=22"
   },

@@ -45,8 +45,8 @@ function localDate(): { date: string; time: string } {
 }
 
 export default definePluginEntry({
-  id: "openclaw-scribe",
-  name: "OpenClaw Scribe",
+  id: "openclaw-logkeeper",
+  name: "OpenClaw Logkeeper",
   description:
     "Turn-by-turn conversation logger. Appends every agent exchange to daily markdown files.",
   register(api: OpenClawPluginApi) {
@@ -114,7 +114,7 @@ export default definePluginEntry({
 
           await appendTurn(filePath, date, entry);
         } catch (err) {
-          console.error("[openclaw-scribe] Error writing turn:", err);
+          console.error("[openclaw-logkeeper] Error writing turn:", err);
         }
       },
       { timeoutMs: 25000 }

@@ -36,6 +36,6 @@ jobs:
         run: npm install -g clawhub
 
       - name: Publish to ClawHub
-        run: clawhub package publish ./openclaw-scribe-*.tgz --family code-plugin --json
+        run: clawhub package publish ./openclaw-logkeeper-*.tgz --family code-plugin --json
         env:
           CLAWHUB_TOKEN: ${{ secrets.CLAWHUB_TOKEN }}
