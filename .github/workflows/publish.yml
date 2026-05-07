@@ -32,10 +32,11 @@ jobs:
       - name: Install clawhub CLI
         run: npm install -g clawhub
 
+      - name: Authenticate with ClawHub
+        run: clawhub login --token ${{ secrets.CLAWHUB_TOKEN }} --no-browser
+
       - name: Pack for ClawHub
         run: clawhub package pack .
 
       - name: Publish to ClawHub
         run: clawhub package publish ./openclaw-logkeeper-*.tgz --family code-plugin --source-repo ${{ github.repository }} --source-commit ${{ github.sha }} --source-ref ${{ github.ref_name }} --json
-        env:
-          CLAWHUB_TOKEN: ${{ secrets.CLAWHUB_TOKEN }}
