@@ -87,7 +87,7 @@ All options go under `plugins.entries.openclaw-logkeeper.config` in `openclaw.js
           "allowConversationAccess": true
         },
         "config": {
-          "logDir": "~/clawcode/memory",
+          "logDir": "~/ai-logs",
           "filename": "{date}-{channel}.md",
           "channels": {
             "discord": "{date}-discord.md",
@@ -110,7 +110,7 @@ If you use QMD to search your logs, point `logDir` at the directory QMD's `daily
 
 ## Example output
 
-**`~/clawcode/memory/2026-05-07-discord.md`:**
+**`~/ai-logs/2026-05-07-discord.md`:**
 
 ```markdown
 # 2026-05-07
@@ -126,7 +126,7 @@ If you use QMD to search your logs, point `logDir` at the directory QMD's `daily
 **jomama:** Done — reminder added to Apple Reminders.
 ```
 
-**`~/clawcode/memory/2026-05-07-tui.md`:**
+**`~/ai-logs/2026-05-07-tui.md`:**
 
 ```markdown
 # 2026-05-07

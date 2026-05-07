@@ -8,11 +8,10 @@
   "configSchema": {
     "type": "object",
     "additionalProperties": false,
-    "required": ["logDir"],
     "properties": {
       "logDir": {
         "type": "string",
-        "description": "Directory to write daily log files. Supports ~/ prefix. Required."
+        "description": "Directory to write daily log files. Supports ~/ prefix. Required — plugin disables itself at startup if not set."
       },
       "filename": {
         "type": "string",
