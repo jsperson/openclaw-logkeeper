@@ -16,6 +16,14 @@ export interface FormatEntryOpts {
   metaLine?: string;
 }
 
+// Matches OpenClaw's injected timestamp line: [Thu 2026-05-07 16:31 CDT] message
+const ENVELOPE_TIMESTAMP_RE = /\[\w{3} \d{4}-\d{2}-\d{2} \d{2}:\d{2}(?::\d{2})? \w+\] ([\s\S]+)$/;
+
+export function stripEnvelope(text: string): string {
+  const match = ENVELOPE_TIMESTAMP_RE.exec(text);
+  return match ? match[1]!.trim() : text.trim();
+}
+
 export function truncate(text: string, maxLength: number): string {
   if (maxLength === 0 || text.length <= maxLength) {
     return text;

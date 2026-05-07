@@ -6,8 +6,34 @@ import {
   appendTurn,
   extractText,
   formatEntry,
+  stripEnvelope,
   truncate,
 } from "../src/logger.js";
+
+describe("stripEnvelope", () => {
+  it("extracts message from full envelope with System prefix", () => {
+    const input = `System: [2026-05-07 16:31:38 CDT] Node: Office Mac Studio · mode local\n\nSender (untrusted metadata):\n\`\`\`json\n{}\n\`\`\`\n\n[Thu 2026-05-07 16:31 CDT] Hello world`;
+    expect(stripEnvelope(input)).toBe("Hello world");
+  });
+
+  it("extracts message from envelope without System prefix", () => {
+    const input = `Sender (untrusted metadata):\n\`\`\`json\n{}\n\`\`\`\n\n[Thu 2026-05-07 16:33 CDT] Hello again`;
+    expect(stripEnvelope(input)).toBe("Hello again");
+  });
+
+  it("returns plain text unchanged when no envelope present", () => {
+    expect(stripEnvelope("just a plain message")).toBe("just a plain message");
+  });
+
+  it("handles multiline actual message after timestamp", () => {
+    const input = `[Thu 2026-05-07 16:33 CDT] Line one\nLine two`;
+    expect(stripEnvelope(input)).toBe("Line one\nLine two");
+  });
+
+  it("trims surrounding whitespace", () => {
+    expect(stripEnvelope("  hello  ")).toBe("hello");
+  });
+});
 
 describe("truncate", () => {
   it("returns text unchanged when under limit", () => {

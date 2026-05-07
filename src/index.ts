@@ -2,7 +2,7 @@ import { definePluginEntry, type OpenClawPluginApi } from "openclaw/plugin-sdk/p
 import { join } from "node:path";
 import { resolveConfig } from "./config.js";
 import { resolveAssistantAlias, resolveUserAlias, type PluginApi } from "./identity.js";
-import { appendTurn, extractText, formatEntry, truncate, type ContentBlock } from "./logger.js";
+import { appendTurn, extractText, formatEntry, stripEnvelope, truncate, type ContentBlock } from "./logger.js";
 import { resolveFilename } from "./template.js";
 
 interface PluginHookMessage {
@@ -90,7 +90,7 @@ export default definePluginEntry({
           const filePath = join(config.logDir, filename);
 
           const assistantAlias = resolveAssistantAlias(api as unknown as PluginApi, config, agentId);
-          const userText = extractText(lastUser.content);
+          const userText = stripEnvelope(extractText(lastUser.content));
           const rawAssistantText = extractText(lastAssistant.content);
           const assistantText = truncate(rawAssistantText, config.maxLength);
 
