@@ -1,9 +1,9 @@
-import { definePluginEntry } from "openclaw/plugin-sdk/plugin-entry";
+import { definePluginEntry, type OpenClawPluginApi } from "openclaw/plugin-sdk/plugin-entry";
+import { join } from "node:path";
 import { resolveConfig } from "./config.js";
 import { resolveAssistantAlias, resolveUserAlias, type PluginApi } from "./identity.js";
 import { appendTurn, extractText, formatEntry, truncate, type ContentBlock } from "./logger.js";
 import { resolveFilename } from "./template.js";
-import { join } from "node:path";
 
 interface PluginHookMessage {
   role: "user" | "assistant" | "compactionSummary" | string;
@@ -44,16 +44,15 @@ function localDate(): { date: string; time: string } {
   return { date, time };
 }
 
-const plugin = definePluginEntry({
+export default definePluginEntry({
   id: "openclaw-scribe",
   name: "OpenClaw Scribe",
   description:
     "Turn-by-turn conversation logger. Appends every agent exchange to daily markdown files.",
-  register(api) {
-    // Resolve config at startup — log error and disable if misconfigured.
+  register(api: OpenClawPluginApi) {
     let config: ReturnType<typeof resolveConfig>;
     try {
-      config = resolveConfig((api as unknown as { pluginConfig: unknown }).pluginConfig);
+      config = resolveConfig(api.pluginConfig);
     } catch (err) {
       console.error(String(err));
       return;
@@ -61,18 +60,17 @@ const plugin = definePluginEntry({
 
     const userAlias = resolveUserAlias(config);
 
-    (api as unknown as { on: (event: string, handler: (event: AgentEndEvent, ctx: AgentEndContext) => Promise<void>, opts?: { timeoutMs?: number }) => void }).on(
+    api.on(
       "agent_end",
-      async (event: AgentEndEvent, ctx: AgentEndContext): Promise<void> => {
+      async (event: unknown, ctx: unknown): Promise<void> => {
         try {
-          // Guard: skip failed turns
-          if (!event.success) return;
+          const e = event as AgentEndEvent;
+          const c = ctx as AgentEndContext;
 
-          // Guard: skip cron/heartbeat turns unless opted in
-          if (ctx.jobId && !config.includeCron) return;
+          if (!e.success) return;
+          if (c.jobId && !config.includeCron) return;
 
-          // Find last user and assistant messages
-          const messages = event.messages;
+          const messages = e.messages;
           let lastUser: PluginHookMessage | undefined;
           let lastAssistant: PluginHookMessage | undefined;
           for (let i = messages.length - 1; i >= 0; i--) {
@@ -82,31 +80,26 @@ const plugin = definePluginEntry({
             if (lastUser && lastAssistant) break;
           }
 
-          // Guard: skip tool-only or summary turns
           if (!lastUser || !lastAssistant) return;
 
           const { date, time } = localDate();
-          const channel = ctx.messageProvider ?? "tui";
-          const agentId = ctx.agentId ?? "main";
+          const channel = c.messageProvider ?? "tui";
+          const agentId = c.agentId ?? "main";
 
           const filename = resolveFilename(config, channel, date, agentId);
           const filePath = join(config.logDir, filename);
 
           const assistantAlias = resolveAssistantAlias(api as unknown as PluginApi, config, agentId);
-
           const userText = extractText(lastUser.content);
           const rawAssistantText = extractText(lastAssistant.content);
           const assistantText = truncate(rawAssistantText, config.maxLength);
 
-          // Build optional metadata line
           let metaLine = "";
           if (config.metadata) {
-            const model = ctx.modelId ?? null;
+            const model = c.modelId ?? null;
             const usage = lastAssistant.usage ?? null;
             if (model !== null || usage !== null) {
-              const inputTok = usage?.input ?? "?";
-              const outputTok = usage?.output ?? "?";
-              metaLine = `· ${model ?? "?"} · ${inputTok}↑ ${outputTok}↓\n`;
+              metaLine = `· ${model ?? "?"} · ${usage?.input ?? "?"}↑ ${usage?.output ?? "?"}↓\n`;
             }
           }
 
@@ -128,5 +121,3 @@ const plugin = definePluginEntry({
     );
   },
 });
-
-export default plugin;
