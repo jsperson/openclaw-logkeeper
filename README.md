@@ -66,7 +66,7 @@ All options go under `plugins.entries.openclaw-logkeeper.config` in `openclaw.js
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `logDir` | `string` | **required** | Directory for log files. Supports `~/`. |
+| `logDir` | `string` | `~/.openclaw/logs` | Directory for log files. Supports `~/`. |
 | `filename` | `string` | `"{date}-{channel}.md"` | Filename template. Variables: `{date}` (YYYY-MM-DD), `{channel}` (provider name or `tui`), `{agent}` (agentId). |
 | `channels` | `object` | `{}` | Per-channel filename overrides. Key: provider name (`discord`, `telegram`, etc.) or `tui`. Value: filename template. |
 | `userAlias` | `string` | `"user"` | Speaker label for the user. |

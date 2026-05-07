@@ -12,6 +12,7 @@ export interface ScribeConfig {
 }
 
 const DEFAULTS = {
+  logDir: "~/.openclaw/logs",
   filename: "{date}-{channel}.md",
   channels: {},
   userAlias: "user",
@@ -22,22 +23,12 @@ const DEFAULTS = {
 } as const;
 
 export function resolveConfig(raw: unknown): ScribeConfig {
-  if (!raw || typeof raw !== "object") {
-    throw new Error(
-      "[openclaw-scribe] Plugin config is missing or invalid. Add a config block under plugins.entries.openclaw-scribe.config in openclaw.json."
-    );
-  }
-
-  const cfg = raw as Record<string, unknown>;
-
-  if (!cfg["logDir"] || typeof cfg["logDir"] !== "string") {
-    throw new Error(
-      "[openclaw-scribe] Required config field 'logDir' is missing. Set plugins.entries.openclaw-scribe.config.logDir in openclaw.json."
-    );
-  }
+  const cfg = (raw && typeof raw === "object" ? raw : {}) as Record<string, unknown>;
 
   return {
-    logDir: expandHome(cfg["logDir"] as string),
+    logDir: expandHome(
+      typeof cfg["logDir"] === "string" ? cfg["logDir"] : DEFAULTS.logDir
+    ),
     filename:
       typeof cfg["filename"] === "string"
         ? cfg["filename"]

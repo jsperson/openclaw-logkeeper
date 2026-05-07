@@ -15,12 +15,14 @@ describe("resolveConfig", () => {
     expect(cfg.channels).toEqual({});
   });
 
-  it("throws a descriptive error when logDir is missing", () => {
-    expect(() => resolveConfig({})).toThrow(/logDir/);
+  it("uses default logDir when not set", () => {
+    const cfg = resolveConfig({});
+    expect(cfg.logDir).toBe(homedir() + "/.openclaw/logs");
   });
 
-  it("throws when config is null", () => {
-    expect(() => resolveConfig(null)).toThrow(/config/i);
+  it("uses default logDir when config is null", () => {
+    const cfg = resolveConfig(null);
+    expect(cfg.logDir).toBe(homedir() + "/.openclaw/logs");
   });
 
   it("expands ~/ in logDir", () => {
