@@ -1,6 +1,6 @@
 {
   "name": "openclaw-logkeeper",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Turn-by-turn conversation logger for OpenClaw. Appends every agent exchange to daily markdown files across all surfaces — Discord, TUI, webchat, cron — regardless of model.",
   "type": "module",
   "keywords": [

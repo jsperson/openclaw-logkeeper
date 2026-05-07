@@ -34,7 +34,7 @@ function makeApi(logDir: string, extra: Record<string, unknown> = {}) {
   const handlers: Handlers = {};
   return {
     pluginConfig: { logDir, ...extra },
-    config: {},
+    config: { plugins: { entries: { "openclaw-logkeeper": { hooks: { allowConversationAccess: true } } } } },
     runtime: {
       agent: {
         resolveAgentIdentity: () => ({ name: "jomama" }),

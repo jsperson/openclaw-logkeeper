@@ -60,6 +60,20 @@ export default definePluginEntry({
 
     const userAlias = resolveUserAlias(config);
 
+    const hasAccess =
+      (api.config as Record<string, unknown> & { plugins?: { entries?: Record<string, { hooks?: { allowConversationAccess?: boolean } }> } })
+        ?.plugins?.entries?.["openclaw-logkeeper"]?.hooks?.allowConversationAccess === true;
+
+    if (!hasAccess) {
+      console.error(
+        "[openclaw-logkeeper] WARNING: agent_end hook will be blocked because " +
+        "plugins.entries.openclaw-logkeeper.hooks.allowConversationAccess is not set to true in openclaw.json. " +
+        "No conversations will be logged until this is set. " +
+        "Add the following to your openclaw.json under plugins.entries.openclaw-logkeeper: " +
+        '{"hooks":{"allowConversationAccess":true}}'
+      );
+    }
+
     api.on(
       "agent_end",
       async (event: unknown, ctx: unknown): Promise<void> => {
