@@ -1,9 +1,16 @@
 {
   "name": "openclaw-logkeeper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Turn-by-turn conversation logger for OpenClaw. Appends every agent exchange to daily markdown files across all surfaces — Discord, TUI, webchat, cron — regardless of model.",
   "type": "module",
-  "keywords": ["openclaw", "plugin", "logging", "conversation", "markdown", "journal"],
+  "keywords": [
+    "openclaw",
+    "plugin",
+    "logging",
+    "conversation",
+    "markdown",
+    "journal"
+  ],
   "author": "Scott Person",
   "license": "MIT",
   "repository": {
@@ -52,8 +59,12 @@
     "vitest": "^2.0.0"
   },
   "openclaw": {
-    "extensions": ["./src/index.ts"],
-    "runtimeExtensions": ["./dist/index.js"],
+    "extensions": [
+      "./src/index.ts"
+    ],
+    "runtimeExtensions": [
+      "./dist/index.js"
+    ],
     "compat": {
       "pluginApi": ">=2026.3.24-beta.2",
       "minGatewayVersion": "2026.3.24-beta.2"
